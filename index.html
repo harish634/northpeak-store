@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>NorthPeak Outfitters</title>
+  <!-- Paste the CDN script tag copied from Data Cloud here -->
+  <script src="PASTE_YOUR_DATA_CLOUD_CDN_URL_HERE"></script>
+</head>
+<body>
+  <h1>NorthPeak 2-Person Tent</h1>
+  <p>₹12,500</p>
+  <input id="email" type="email" value="priya.raman@example.com">
+  <button id="addToCart">Add to cart</button>
+  <p id="status"></p>
+
+  <script>
+    SalesforceInteractions.init({
+      consents: [{
+        provider: 'NorthPeak',
+        purpose: 'Tracking',
+        status: SalesforceInteractions.ConsentStatus.OptIn
+      }]
+    }).then(() => {
+      document.getElementById('addToCart').addEventListener('click', () => {
+        SalesforceInteractions.sendEvent({
+          interaction: {
+            name: 'cartEvent',
+            eventType: 'cartEvent',
+            cartAction: 'addToCart',
+            productSku: 'TENT-2P',
+            cartValue: 12500,
+            email: document.getElementById('email').value
+          }
+        });
+        document.getElementById('status').textContent = 'Event sent';
+      });
+    });
+  </script>
+</body>
+</html>
